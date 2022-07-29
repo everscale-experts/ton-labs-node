@@ -1,0 +1,10 @@
+{
+  "client_key": null,
+  "server_address": "127.0.0.1:4925",
+  "server_key": {
+    "type_id": 1209251014,
+    "pub_key": "Q4xlP+0OJ07vssQ/Dgf12Rx96nQ1uyJrNFTNxU6cQws=",
+    "pvt_key": null
+  },
+  "timeouts": null
+}

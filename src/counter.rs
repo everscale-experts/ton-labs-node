@@ -1,0 +1,1 @@
+pub static mut WRITTEN_MESSAGES_COUNT: usize = 0;
