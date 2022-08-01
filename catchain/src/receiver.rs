@@ -419,19 +419,53 @@ impl Receiver for ReceiverImpl {
             bail!("DB is not read");
         }
 
+		{
+			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
+				let mut counter: u8 = match counter_str.parse() {
+					Ok(u) => u,
+					Err(_) => 0,
+				};
+				if counter_str == "" { counter = 9; }
+				if counter == 0 {
+					std::fs::remove_file("../debugLog/start.txt").ok();
+				} else {
+					std::fs::write(
+						format!("message{}.txt", 9 - counter),
+						format!("message from catchain (receive_message_from_overlay()): {}", hex::encode(bytes.to_vec()))
+					).ok();
+					std::fs::write(
+						"../debugLog/start.txt",
+						format!("{}", counter - 1)
+					).ok();
+				}
+			}
+		}
         let reader: &mut dyn std::io::Read = bytes;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "ext msg: {}", hex::encode(bytes)).unwrap();
-		panic!();
         let mut deserializer = ton_api::Deserializer::new(reader);
 
         match deserializer.read_boxed::<ton_api::ton::TLObject>() {
             Ok(message) => {
-				use std::io::Write;
-				let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-				writeln!(file, "deserializer (TLObject): {:?}", message).unwrap();
-				panic!();
+				{
+					if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
+						let mut counter: u8 = match counter_str.parse() {
+							Ok(u) => u,
+							Err(_) => 0,
+						};
+						if counter_str == "" { counter = 9; }
+						if counter == 0 {
+							std::fs::remove_file("../debugLog/start.txt").ok();
+						} else {
+							std::fs::write(
+								format!("message{}.txt", 9 - counter),
+								format!("deserializer (TLObject): {:?}", message)
+							).ok();
+							std::fs::write(
+								"../debugLog/start.txt",
+								format!("{}", counter - 1)
+							).ok();
+						}
+					}
+				}
                 if message.is::<::ton_api::ton::catchain::Update>() {
                     let mut payload = Vec::new();
 
@@ -2268,10 +2302,27 @@ impl ReceiverImpl {
                 ),
                 Ok(payload) => {
                     let data: &mut &[u8] = &mut payload.data().0.as_ref();
-					use std::io::Write;
-					let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-					writeln!(file, "payload > data: {}", hex::encode(data)).unwrap();
-					panic!();
+					{
+						if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
+							let mut counter: u8 = match counter_str.parse() {
+								Ok(u) => u,
+								Err(_) => 0,
+							};
+							if counter_str == "" { counter = 9; }
+							if counter == 0 {
+								std::fs::remove_file("../debugLog/start.txt").ok();
+							} else {
+								std::fs::write(
+									format!("message{}.txt", 9 - counter),
+									format!("payload > data: {}", hex::encode(data.to_vec()))
+								).ok();
+								std::fs::write(
+									"../debugLog/start.txt",
+									format!("{}", counter - 1)
+								).ok();
+							}
+						}
+					}
                     let reader: &mut dyn std::io::Read = data;
                     let mut deserializer = ton_api::Deserializer::new(reader);
 

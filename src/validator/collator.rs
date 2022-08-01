@@ -2492,10 +2492,27 @@ impl Collator {
         let cell = new_block.serialize()?;
         block_id.root_hash = cell.repr_hash();
         let data = ton_types::serialize_toc(&cell)?;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "toc: {}", hex::encode(&data)).unwrap();
-		panic!();
+		{
+			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
+				let mut counter: u8 = match counter_str.parse() {
+					Ok(u) => u,
+					Err(_) => 0,
+				};
+				if counter_str == "" { counter = 9; }
+				if counter == 0 {
+					std::fs::remove_file("../debugLog/start.txt").ok();
+				} else {
+					std::fs::write(
+						format!("message{}.txt", 9 - counter),
+						format!("toc: {}", hex::encode(&data))
+					).ok();
+					std::fs::write(
+						"../debugLog/start.txt",
+						format!("{}", counter - 1)
+					).ok();
+				}
+			}
+		}
         block_id.file_hash = UInt256::calc_file_hash(&data);
 
         self.check_stop_flag()?;

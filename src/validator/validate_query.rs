@@ -356,10 +356,7 @@ impl ValidateQuery {
         CHECK!(!block_candidate.data.is_empty());
         // 1. deserialize block itself
         let data = std::mem::take(&mut block_candidate.data);
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "unpack: {}", hex::encode(&data)).unwrap();
-		panic!();
+		// should it be written to the file? It doesn`t look like a message
         base.block = BlockStuff::new(block_candidate.block_id.clone(), data)?;
         // 3. initial block parse
         Self::init_parse(&mut base)?;
