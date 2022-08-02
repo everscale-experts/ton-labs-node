@@ -1086,27 +1086,11 @@ impl SessionProcessor for SessionProcessorImpl {
               collated_data : candidate.collated_data.data().0.clone().into(),
             }.into_boxed();
             let data = catchain::utils::serialize_tl_boxed_object!(&broadcast);
-			{
-				if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-					let mut counter: u8 = match counter_str.parse() {
-						Ok(u) => u,
-						Err(_) => 0,
-					};
-					if counter_str == "" { counter = 9; }
-					if counter == 0 {
-						std::fs::remove_file("../debugLog/start.txt").ok();
-					} else {
-						std::fs::write(
-							format!("message{}.txt", 9 - counter),
-							format!("message from catchain: {}", hex::encode(&*data))
-						).ok();
-						std::fs::write(
-							"../debugLog/start.txt",
-							format!("{}", counter - 1)
-						).ok();
-					}
-				}
-			}
+			writer::check_file_and_write_message(
+				"debugLog",
+				"message from catchain",
+				&hex::encode(&*data)
+			);
             let data = catchain::CatchainFactory::create_block_payload(data);
 
             post_closure(&completion_task_queue, move |processor : &mut dyn SessionProcessor|

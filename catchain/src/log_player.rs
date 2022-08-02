@@ -495,27 +495,11 @@ impl LogPlayerImpl {
             let data_size: u32 = captures.get(1).unwrap().as_str().parse().unwrap();
             let data = &captures.get(2).unwrap().as_str();
             let bytes = parse_hex(&data);
-			{
-				if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-					let mut counter: u8 = match counter_str.parse() {
-						Ok(u) => u,
-						Err(_) => 0,
-					};
-					if counter_str == "" { counter = 9; }
-					if counter == 0 {
-						std::fs::remove_file("../debugLog/start.txt").ok();
-					} else {
-						std::fs::write(
-							format!("message{}.txt", 9 - counter),
-							format!("message from catchain (parse_body()): {}", hex::encode(&bytes))
-						).ok();
-						std::fs::write(
-							"../debugLog/start.txt",
-							format!("{}", counter - 1)
-						).ok();
-					}
-				}
-			}
+			writer::check_file_and_write_message(
+				"../debugLog",
+				"message from catchain (parse_body())",
+				&hex::encode(&bytes)
+			);
             let source_id = &captures.get(3).unwrap().as_str();
             let source_id = utils::parse_hex_as_public_key_hash(&source_id);
             let block_session_id = &captures.get(4).unwrap().as_str();

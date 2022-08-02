@@ -692,27 +692,11 @@ impl EngineOperations for Engine {
                 fail!("{}", err);
             }
             Ok((id, message)) => {
-				{
-					if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-						let mut counter: u8 = match counter_str.parse() {
-							Ok(u) => u,
-							Err(_) => 0,
-						};
-						if counter_str == "" { counter = 9; }
-						if counter == 0 {
-							std::fs::remove_file("../debugLog/start.txt").ok();
-						} else {
-							std::fs::write(
-								format!("message{}.txt", 9 - counter),
-								format!("redirect_external_message: {}", message.to_string())
-							).ok();
-							std::fs::write(
-								"../debugLog/start.txt",
-								format!("{}", counter - 1)
-							).ok();
-						}
-					}
-				}
+				writer::check_file_and_write_message(
+					"debugLog",
+					"redirect_external_message",
+					&message
+				);
                 match redirect_external_message(self, message, id.clone(), message_data).await {
                     Err(e) => {
                         let err = format!(

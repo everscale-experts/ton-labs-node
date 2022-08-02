@@ -412,27 +412,7 @@ impl SlashingManager {
     }
 
     fn serialize_message(message: &Arc<Message>) -> Result<(UInt256, Vec<u8>)> {
-		{
-			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-				let mut counter: u8 = match counter_str.parse() {
-					Ok(u) => u,
-					Err(_) => 0,
-				};
-				if counter_str == "" { counter = 9; }
-				if counter == 0 {
-					std::fs::remove_file("../debugLog/start.txt").ok();
-				} else {
-					std::fs::write(
-						format!("message{}.txt", 9 - counter),
-						format!("serialize_message: {}", message)
-					).ok();
-					std::fs::write(
-						"../debugLog/start.txt",
-						format!("{}", counter - 1)
-					).ok();
-				}
-			}
-		}
+        writer::check_file_and_write_message("debugLog", "serialize_message", message);
         let cell = message.serialize()?;
         let id = cell.repr_hash();
         let bytes = ton_types::serialize_toc(&cell)?;

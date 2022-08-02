@@ -243,27 +243,11 @@ impl CatchainClient {
         log::trace!(target: Self::TARGET, "result status: {}", &result.is_ok());
         let (data, _) = result?;
         let data = data.ok_or_else(|| error!("asnwer is None!"))?;
-		{
-			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-				let mut counter: u8 = match counter_str.parse() {
-					Ok(u) => u,
-					Err(_) => 0,
-				};
-				if counter_str == "" { counter = 9; }
-				if counter == 0 {
-					std::fs::remove_file("../debugLog/start.txt").ok();
-				} else {
-					std::fs::write(
-						format!("message{}.txt", 9 - counter),
-						format!("answer (catchain): {}", hex::encode(&data))
-					).ok();
-					std::fs::write(
-						"../debugLog/start.txt",
-						format!("{}", counter - 1)
-					).ok();
-				}
-			}
-		}
+		writer::check_file_and_write_message(
+			"debugLog",
+			"answer (catchain)",
+			&hex::encode(&data)
+		);
         let data = catchain::CatchainFactory::create_block_payload(
             ton_api::ton::bytes(data)
         );
@@ -534,27 +518,11 @@ impl QueriesConsumer for CatchainClientConsumer {
                 fail!(e)
             }
         };
-		{
-			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-				let mut counter: u8 = match counter_str.parse() {
-					Ok(u) => u,
-					Err(_) => 0,
-				};
-				if counter_str == "" { counter = 9; }
-				if counter == 0 {
-					std::fs::remove_file("../debugLog/start.txt").ok();
-				} else {
-					std::fs::write(
-						format!("message{}.txt", 9 - counter),
-						format!("query (catchain): {}", hex::encode(&data))
-					).ok();
-					std::fs::write(
-						"../debugLog/start.txt",
-						format!("{}", counter - 1)
-					).ok();
-				}
-			}
-		}
+		writer::check_file_and_write_message(
+			"debugLog",
+			"query (catchain)",
+			&hex::encode(&data)
+		);
         let (wait, mut queue_reader) = Wait::new();
         self.worker_waiters.insert(id.as_nanos(), wait.clone());
         

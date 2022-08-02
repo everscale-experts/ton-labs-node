@@ -668,27 +668,11 @@ impl InternalDb {
         // TODO read directly from file without huge vector
 
         let data = self.shard_state_persistent_db.get_vec(id, 0, full_lenth).await?;
-		{
-			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-				let mut counter: u8 = match counter_str.parse() {
-					Ok(u) => u,
-					Err(_) => 0,
-				};
-				if counter_str == "" { counter = 9; }
-				if counter == 0 {
-					std::fs::remove_file("../debugLog/start.txt").ok();
-				} else {
-					std::fs::write(
-						format!("message{}.txt", 9 - counter),
-						format!("load_shard_state_persistent: {}", hex::encode(&data))
-					).ok();
-					std::fs::write(
-						"../debugLog/start.txt",
-						format!("{}", counter - 1)
-					).ok();
-				}
-			}
-		}
+		writer::check_file_and_write_message(
+			"debugLog",
+			"load_shard_state_persistent",
+			&hex::encode(&data)
+		);
         ShardStateStuff::deserialize_inmem(
             id.clone(),
             Arc::new(data),

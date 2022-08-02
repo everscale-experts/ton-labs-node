@@ -1593,27 +1593,11 @@ impl CatchainProcessor {
         instrument!();
 
         let bytes = &mut data.data().as_ref();
-		{
-			if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-				let mut counter: u8 = match counter_str.parse() {
-					Ok(u) => u,
-					Err(_) => 0,
-				};
-				if counter_str == "" { counter = 9; }
-				if counter == 0 {
-					std::fs::remove_file("../debugLog/start.txt").ok();
-				} else {
-					std::fs::write(
-						format!("message{}.txt", 9 - counter),
-						format!("message from on_message function: {}", hex::encode(bytes.clone()))
-					).ok();
-					std::fs::write(
-						"../debugLog/start.txt",
-						format!("{}", counter - 1)
-					).ok();
-				}
-			}
-		}
+        writer::check_file_and_write_message(
+            "../debugLog",
+            "message from on_message function",
+            &hex::encode(bytes.clone())
+        );
 
         if log_enabled!(log::Level::Debug) {
             debug!(

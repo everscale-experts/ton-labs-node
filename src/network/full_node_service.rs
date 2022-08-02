@@ -398,27 +398,11 @@ impl FullNodeOverlayService {
                     query.offset as u64,
                     query.max_size as u64
                 ).await?;
-				{
-					if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-						let mut counter: u8 = match counter_str.parse() {
-							Ok(u) => u,
-							Err(_) => 0,
-						};
-						if counter_str == "" { counter = 9; }
-						if counter == 0 {
-							std::fs::remove_file("../debugLog/start.txt").ok();
-						} else {
-							std::fs::write(
-								format!("message{}.txt", 9 - counter),
-								format!("download_persistent_state_slice: {}", hex::encode(&data))
-							).ok();
-							std::fs::write(
-								"../debugLog/start.txt",
-								format!("{}", counter - 1)
-							).ok();
-						}
-					}
-				}
+				writer::check_file_and_write_message(
+					"debugLog",
+					"download_persistent_state_slice",
+					&hex::encode(&data)
+				);
                 let answer = TaggedByteVec {
                     object: data,
                     #[cfg(feature = "telemetry")]
@@ -436,27 +420,11 @@ impl FullNodeOverlayService {
             if handle.has_persistent_state() {
                 let size = self.engine.load_persistent_state_size(&query.block).await?;
                 let data = self.engine.load_persistent_state_slice(&handle, 0, size).await?;
-				{
-					if let Ok(counter_str) = std::fs::read_to_string("../debugLog/start.txt") {
-						let mut counter: u8 = match counter_str.parse() {
-							Ok(u) => u,
-							Err(_) => 0,
-						};
-						if counter_str == "" { counter = 9; }
-						if counter == 0 {
-							std::fs::remove_file("../debugLog/start.txt").ok();
-						} else {
-							std::fs::write(
-								format!("message{}.txt", 9 - counter),
-								format!("download_zero_state: {}", hex::encode(&data))
-							).ok();
-							std::fs::write(
-								"../debugLog/start.txt",
-								format!("{}", counter - 1)
-							).ok();
-						}
-					}
-				}
+				writer::check_file_and_write_message(
+					"debugLog",
+					"download_zero_state",
+					&hex::encode(&data)
+				);
                 let answer = TaggedByteVec {
                     object: data,
                     #[cfg(feature = "telemetry")]
