@@ -212,9 +212,9 @@ checksum = "904dfeac50f3cdaba28fc6f57fdcddb75f49ed61346676a78c4ffe55877802fd"
 
 [[package]]
 name = "bindgen"
-version = "0.59.2"
+version = "0.60.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bd2a9a458e8f4304c52c43ebb0cfbd520289f8379a52e329a38afda99bf8eb8"
+checksum = "062dddbc1ba4aca46de6338e2bf87771414c335f7b2f2036e8f3e9befebf88e6"
 dependencies = [
  "bitflags",
  "cexpr",
@@ -1439,8 +1439,8 @@ dependencies = [
 
 [[package]]
 name = "librocksdb-sys"
-version = "0.7.1+7.3.1"
-source = "git+https://github.com/rust-rocksdb/rust-rocksdb.git#908049d9e7d130cfeee31d144591e77b69b461d3"
+version = "0.8.0+7.4.4"
+source = "git+https://github.com/rust-rocksdb/rust-rocksdb.git?rev=63240f6#63240f6ea6865f344404815f64123b4ef59cc6c5"
 dependencies = [
  "bindgen",
  "bzip2-sys",
@@ -2514,7 +2514,7 @@ dependencies = [
 [[package]]
 name = "rocksdb"
 version = "0.18.0"
-source = "git+https://github.com/rust-rocksdb/rust-rocksdb.git#908049d9e7d130cfeee31d144591e77b69b461d3"
+source = "git+https://github.com/rust-rocksdb/rust-rocksdb.git?rev=63240f6#63240f6ea6865f344404815f64123b4ef59cc6c5"
 dependencies = [
  "libc",
  "librocksdb-sys",
@@ -2975,9 +2975,9 @@ dependencies = [
 
 [[package]]
 name = "tikv-jemalloc-sys"
-version = "0.4.3+5.2.1-patched.2"
+version = "0.5.1+5.3.0-patched"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1792ccb507d955b46af42c123ea8863668fae24d03721e40cad6a41773dbb49"
+checksum = "931e876f91fed0827f863a2d153897790da0b24d882c721a79cb3beb0b903261"
 dependencies = [
  "cc",
  "fs_extra",

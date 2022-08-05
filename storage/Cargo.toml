@@ -31,15 +31,11 @@ ton_types = { git = 'https://github.com/tonlabs/ton-labs-types', tag = '1.11.3' 
 
 [target.'cfg(windows)'.dependencies.rocksdb]
 git = 'https://github.com/rust-rocksdb/rust-rocksdb.git'
-#tag="v0.18.0"
-#rev = "180e65e1b00f6b032e1513d94a4f0a4de7cafba1"
-rev = "63240f6"
 
 [target.'cfg(unix)'.dependencies.rocksdb]
 git = 'https://github.com/rust-rocksdb/rust-rocksdb.git'
 #tag="v0.18.0"
-#rev = "180e65e1b00f6b032e1513d94a4f0a4de7cafba1"
-rev = "63240f6"
+rev = "3256152"
 features = [ 'jemalloc' ]
 
 [build-dependencies.cc]
