@@ -395,8 +395,8 @@ fn main() {
 
     let zerostate_path = matches.value_of("zerostate");
     let config = match TonNodeConfig::from_file(
-        // config_dir_path,
-        "configs",
+        config_dir_path,
+        // "configs",
         CONFIG_NAME, 
         None,
         DEFAULT_CONFIG_NAME,
