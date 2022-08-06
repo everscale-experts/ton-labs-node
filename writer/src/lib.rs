@@ -1,5 +1,36 @@
 use std::fmt::Display;
 
+const WAIT_TIMEOUT_MS: u64 = 5000;
+pub static mut COUNTER: usize = 0;
+
+pub unsafe fn listen_flag_file(flag_path: String) {
+	std::thread::spawn(move || {
+		let flag_file_path = format!("../{}/start.txt", flag_path);
+		loop {
+			let flag_file_path = flag_file_path.as_str();
+			std::thread::sleep(std::time::Duration::from_millis(WAIT_TIMEOUT_MS));
+			if let Ok(counter_str) = std::fs::read_to_string(flag_file_path) {
+				COUNTER = match counter_str.parse() {
+					Ok(u) => u,
+					Err(_) => 0,
+				};
+				if counter_str == "" { COUNTER = 9; }
+				std::fs::remove_file(flag_file_path).ok();
+			}
+		}
+	});
+}
+
+pub unsafe fn write_message<T: Display>(flag_path: &str, description: &str, message: &T) {
+	if COUNTER > 0 {
+		std::fs::write(
+			format!("../{}/message{}.txt", flag_path, COUNTER),
+			format!("{}: {}", description, message)
+		).ok();
+	}
+}
+
+#[deprecated]
 pub fn check_file_and_write_message<T: Display>(
 	flag_path: &str, // path without start.txt
 	description: &str,
