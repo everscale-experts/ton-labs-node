@@ -398,8 +398,7 @@ impl FullNodeOverlayService {
                     query.offset as u64,
                     query.max_size as u64
                 ).await?;
-				writer::check_file_and_write_message(
-					"debugLog",
+				writer::write_message(
 					"download_persistent_state_slice",
 					&hex::encode(&data)
 				);
@@ -420,8 +419,7 @@ impl FullNodeOverlayService {
             if handle.has_persistent_state() {
                 let size = self.engine.load_persistent_state_size(&query.block).await?;
                 let data = self.engine.load_persistent_state_slice(&handle, 0, size).await?;
-				writer::check_file_and_write_message(
-					"debugLog",
+				writer::write_message(
 					"download_zero_state",
 					&hex::encode(&data)
 				);

@@ -2492,8 +2492,7 @@ impl Collator {
         let cell = new_block.serialize()?;
         block_id.root_hash = cell.repr_hash();
         let data = ton_types::serialize_toc(&cell)?;
-		writer::check_file_and_write_message(
-			"debugLog",
+		writer::write_message(
 			"toc",
 			&hex::encode(&data)
 		);

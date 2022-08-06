@@ -243,8 +243,7 @@ impl CatchainClient {
         log::trace!(target: Self::TARGET, "result status: {}", &result.is_ok());
         let (data, _) = result?;
         let data = data.ok_or_else(|| error!("asnwer is None!"))?;
-		writer::check_file_and_write_message(
-			"debugLog",
+		writer::write_message(
 			"answer (catchain)",
 			&hex::encode(&data)
 		);
@@ -518,8 +517,7 @@ impl QueriesConsumer for CatchainClientConsumer {
                 fail!(e)
             }
         };
-		writer::check_file_and_write_message(
-			"debugLog",
+		writer::write_message(
 			"query (catchain)",
 			&hex::encode(&data)
 		);

@@ -1351,8 +1351,7 @@ impl Engine {
         let id = broadcast.block.block;
         let cc_seqno = broadcast.block.cc_seqno as u32;
         let data = broadcast.block.data.0;
-		writer::check_file_and_write_message(
-			"debugLog",
+		writer::write_message(
 			"process_new_shard_block",
 			&hex::encode(&data)
 		);

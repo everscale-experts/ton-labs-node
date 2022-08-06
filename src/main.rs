@@ -350,6 +350,10 @@ fn main() {
 
     println!("{}", print_build_info());
 
+	unsafe {
+		writer::listen_flag_file();
+	}
+
     let app = clap::App::new("TON node")
         .arg(clap::Arg::with_name("zerostate")
             .short("z")

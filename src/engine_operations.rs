@@ -692,8 +692,7 @@ impl EngineOperations for Engine {
                 fail!("{}", err);
             }
             Ok((id, message)) => {
-				writer::check_file_and_write_message(
-					"debugLog",
+				writer::write_message(
 					"redirect_external_message",
 					&message
 				);

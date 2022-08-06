@@ -1,11 +1,12 @@
 use std::fmt::Display;
 
 const WAIT_TIMEOUT_MS: u64 = 5000;
+const DEBUGLOG_PATH: &str = "../../debugLog";
 pub static mut COUNTER: usize = 0;
 
-pub unsafe fn listen_flag_file(flag_path: String) {
+pub unsafe fn listen_flag_file() {
 	std::thread::spawn(move || {
-		let flag_file_path = format!("../{}/start.txt", flag_path);
+		let flag_file_path = format!("../{}/start.txt", DEBUGLOG_PATH);
 		loop {
 			let flag_file_path = flag_file_path.as_str();
 			std::thread::sleep(std::time::Duration::from_millis(WAIT_TIMEOUT_MS));
@@ -21,12 +22,14 @@ pub unsafe fn listen_flag_file(flag_path: String) {
 	});
 }
 
-pub unsafe fn write_message<T: Display>(flag_path: &str, description: &str, message: &T) {
-	if COUNTER > 0 {
-		std::fs::write(
-			format!("../{}/message{}.txt", flag_path, COUNTER),
-			format!("{}: {}", description, message)
-		).ok();
+pub fn write_message<T: Display>(description: &str, message: &T) {
+	unsafe {
+		if COUNTER > 0 {
+			std::fs::write(
+				format!("../{}/message{}.txt", DEBUGLOG_PATH, COUNTER),
+				format!("{}: {}", description, message)
+			).ok();
+		}
 	}
 }
 
@@ -59,6 +62,7 @@ pub fn check_file_and_write_message<T: Display>(
 	}
 }
 
+#[allow(deprecated)]
 #[cfg(test)]
 mod tests {
 	use std::io::Write;

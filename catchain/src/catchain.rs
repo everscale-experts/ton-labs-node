@@ -1593,11 +1593,11 @@ impl CatchainProcessor {
         instrument!();
 
         let bytes = &mut data.data().as_ref();
-        writer::check_file_and_write_message(
-            "../debugLog",
-            "message from on_message function",
-            &hex::encode(bytes.clone())
-        );
+
+		writer::write_message(
+			"message from on_message function",
+			&hex::encode(bytes.clone()),
+		);
 
         if log_enabled!(log::Level::Debug) {
             debug!(

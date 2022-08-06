@@ -419,8 +419,7 @@ impl Receiver for ReceiverImpl {
             bail!("DB is not read");
         }
 
-		writer::check_file_and_write_message(
-			"../debugLog",
+		writer::write_message(
 			"message from catchain (receive_message_from_overlay())",
 			&hex::encode(bytes.to_vec())
 		);
@@ -430,8 +429,7 @@ impl Receiver for ReceiverImpl {
 
         match deserializer.read_boxed::<ton_api::ton::TLObject>() {
             Ok(message) => {
-				writer::check_file_and_write_message(
-					"../debugLog",
+				writer::write_message(
 					"deserializer (TLObject)",
 					&format!("{:?}", &message)
 				);
@@ -2271,8 +2269,7 @@ impl ReceiverImpl {
                 ),
                 Ok(payload) => {
                     let data: &mut &[u8] = &mut payload.data().0.as_ref();
-					writer::check_file_and_write_message(
-						"../debugLog",
+					writer::write_message(
 						"payload > data",
 						&hex::encode(data.to_vec())
 					);

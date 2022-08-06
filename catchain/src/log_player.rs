@@ -495,8 +495,7 @@ impl LogPlayerImpl {
             let data_size: u32 = captures.get(1).unwrap().as_str().parse().unwrap();
             let data = &captures.get(2).unwrap().as_str();
             let bytes = parse_hex(&data);
-			writer::check_file_and_write_message(
-				"../debugLog",
+			writer::write_message(
 				"message from catchain (parse_body())",
 				&hex::encode(&bytes)
 			);

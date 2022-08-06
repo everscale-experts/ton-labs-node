@@ -412,7 +412,7 @@ impl SlashingManager {
     }
 
     fn serialize_message(message: &Arc<Message>) -> Result<(UInt256, Vec<u8>)> {
-        writer::check_file_and_write_message("debugLog", "serialize_message", message);
+		writer::write_message("serialize_message", message);
         let cell = message.serialize()?;
         let id = cell.repr_hash();
         let bytes = ton_types::serialize_toc(&cell)?;

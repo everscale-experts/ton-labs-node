@@ -590,8 +590,11 @@ impl ValidatorGroup {
         sig_set: Vec<(PublicKeyHash, BlockPayloadPtr)>,
         approve_sig_set: Vec<(PublicKeyHash, BlockPayloadPtr)>,
     ) {
-		// That data is also doesn`t look like a message
         let data_vec = data.data().to_vec();
+		writer::write_message(
+			"message from on_block_committed (validator)",
+			&hex::encode(&data_vec)
+		);
         let we_generated = source.id() == self.local_key.id();
 
         log::info!(target: "validator", 

@@ -668,8 +668,7 @@ impl InternalDb {
         // TODO read directly from file without huge vector
 
         let data = self.shard_state_persistent_db.get_vec(id, 0, full_lenth).await?;
-		writer::check_file_and_write_message(
-			"debugLog",
+		writer::write_message(
 			"load_shard_state_persistent",
 			&hex::encode(&data)
 		);

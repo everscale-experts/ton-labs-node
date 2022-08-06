@@ -1086,8 +1086,7 @@ impl SessionProcessor for SessionProcessorImpl {
               collated_data : candidate.collated_data.data().0.clone().into(),
             }.into_boxed();
             let data = catchain::utils::serialize_tl_boxed_object!(&broadcast);
-			writer::check_file_and_write_message(
-				"debugLog",
+			writer::write_message(
 				"message from catchain",
 				&hex::encode(&*data)
 			);
@@ -2879,7 +2878,6 @@ impl SessionProcessorImpl {
 
         use ton_api::ton::*;
 
-		// That data is also doesn`t look like a message
         let data = ::catchain::utils::serialize_tl_boxed_object!(&ton::blockid::BlockIdApprove {
             root_cell_hash: root_hash.into(),
             file_hash: file_hash.into(),
