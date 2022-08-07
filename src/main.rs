@@ -351,7 +351,7 @@ fn main() {
     println!("{}", print_build_info());
 
 	std::thread::spawn(move || {
-		listen_flag_file();
+		writer::listen_flag_file();
 	});
 
     let app = clap::App::new("TON node")
