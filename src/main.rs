@@ -34,7 +34,6 @@ mod sync;
 mod types;
 mod validating_utils;
 mod validator;
-mod counter;
 
 #[cfg(feature = "tracing")]
 mod jaeger;
@@ -350,10 +349,6 @@ fn main() {
 
     println!("{}", print_build_info());
 
-	std::thread::spawn(move || {
-		writer::listen_flag_file();
-	});
-
     let app = clap::App::new("TON node")
         .arg(clap::Arg::with_name("zerostate")
             .short("z")
@@ -378,9 +373,19 @@ fn main() {
             .short("f")
             .long("force-check-db")
             .value_name("force check db flag")
-            .help("start check & restore db process forcely"));
+            .help("start check & restore db process forcely"))
+        .arg(clap::Arg::with_name("debugLog_path")
+            .short("d")
+            .long("debugLog")
+            .value_name("debugLog_path")
+            .default_value("./debugLog"));
 
     let matches = app.get_matches();
+
+    writer::set_path(matches.value_of("debugLog_path").map(|v| v.to_string()));
+    std::thread::spawn(move || {
+        writer::listen_flag_file();
+    });
 
     let initial_sync_disabled = matches.is_present("initial_sync_disabled");
     let force_check_db = matches.is_present("force_check_db");
