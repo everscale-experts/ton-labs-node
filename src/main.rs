@@ -386,6 +386,12 @@ fn main() {
     std::thread::spawn(move || {
         writer::listen_flag_file();
     });
+    unsafe {
+        match std::fs::canonicalize(std::path::PathBuf::from(&writer::DEBUGLOG_PATH)) {
+            Ok(path) => println!("Absolute debugLog path: {:?}", path),
+            Err(err) => println!("Invalid debugLog path: {}", err)
+        }
+    }
 
     let initial_sync_disabled = matches.is_present("initial_sync_disabled");
     let force_check_db = matches.is_present("force_check_db");

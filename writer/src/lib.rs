@@ -1,6 +1,9 @@
-use std::fmt::Display;
+use std::{
+    fmt::Display,
+    path::PathBuf,
+    fs,
+};
 
-#[allow(deprecated)]
 #[cfg(test)]
 mod test;
 
@@ -14,16 +17,18 @@ pub fn listen_flag_file() {
             set_default_debuglog_path();
         }
     }
+    println!("Listener started.");
     loop {
         std::thread::sleep(std::time::Duration::from_millis(WAIT_TIMEOUT_MS));
-        if let Ok(counter_str) = std::fs::read_to_string(flag_path()) {
+        if let Ok(counter_str) = fs::read_to_string(flag_path()) {
             unsafe {
+                println!("Flag catched! Path: {:?}", fs::canonicalize(PathBuf::from(&DEBUGLOG_PATH)));
                 COUNTER = match counter_str.parse() {
                     Ok(u) => u,
                     Err(_) => 0,
                 };
                 if counter_str == "" { COUNTER = 9; }
-                std::fs::remove_file(flag_path()).ok();
+                fs::remove_file(flag_path()).ok();
             }
         }
     }
@@ -32,7 +37,10 @@ pub fn listen_flag_file() {
 pub fn write_message<T: Display>(description: &str, message: &T) {
     unsafe {
         if COUNTER > 0 {
-            std::fs::write(
+            if !std::path::Path::new(&DEBUGLOG_PATH).exists() {
+                fs::create_dir_all(&DEBUGLOG_PATH).ok();
+            }
+            fs::write(
                 format!("{}/message{}.txt", DEBUGLOG_PATH, COUNTER),
                 format!("{}: {}", description, message)
             ).ok();
@@ -50,6 +58,9 @@ pub(crate) fn flag_path() -> String {
 pub fn set_path(debuglog_path: Option<String>) {
     if let Some(path) = debuglog_path {
         unsafe {
+            if !std::path::Path::new(&path).exists() {
+                fs::create_dir_all(&path).ok();
+            }
             DEBUGLOG_PATH = path.clone();
         }
     }
