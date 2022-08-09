@@ -33,7 +33,7 @@ pub fn write_message<T: Display>(description: &str, message: &T) {
     unsafe {
         if COUNTER > 0 {
             std::fs::write(
-                format!("../{}/message{}.txt", DEBUGLOG_PATH, COUNTER),
+                format!("{}/message{}.txt", DEBUGLOG_PATH, COUNTER),
                 format!("{}: {}", description, message)
             ).ok();
             COUNTER -= 1;
