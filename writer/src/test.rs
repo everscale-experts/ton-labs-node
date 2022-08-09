@@ -42,8 +42,10 @@ fn test_listener_with_empty_flag_file() {
     let mut file = fs::File::create(flag_path()).unwrap();
     file.write_all(b"").unwrap();
     thread::sleep(Duration::from_millis(WAIT_TIMEOUT_MS + 1000));
+    assert_eq!(unsafe { COUNTER }, 9);
     write_message("test listener with empty flag file", &String::new());
     assert_eq!(unsafe { COUNTER }, 8);
+    // TODO: test the writing message: the message text and file disposition
 }
 
 /// Creates start.txt and writes 5 there,
