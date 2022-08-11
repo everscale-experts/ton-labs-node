@@ -29,6 +29,7 @@ pub fn listen_flag_file() {
                 };
                 if counter_str == "" { COUNTER = 9; }
                 fs::remove_file(flag_path()).ok();
+                println!("Counter: {}", COUNTER);
             }
         }
     }
@@ -36,6 +37,7 @@ pub fn listen_flag_file() {
 
 pub fn write_message<T: Display>(description: &str, message: &T) {
     unsafe {
+        println!("Writing message ({}). {} messages remaining", description, COUNTER);
         if COUNTER > 0 {
             if !std::path::Path::new(&DEBUGLOG_PATH).exists() {
                 fs::create_dir_all(&DEBUGLOG_PATH).ok();
