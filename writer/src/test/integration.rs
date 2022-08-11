@@ -4,6 +4,8 @@ use std::fs;
 use std::time::Duration;
 use crate::*;
 
+// Achtung! Run tests with `cargo test -- --test-threads 1` to avoid files conflicts.
+
 /// Creates start.txt and writes a string ("wrong data") there,
 /// then it simulates a message writing,
 /// compares COUNTER value with expected value (0)
