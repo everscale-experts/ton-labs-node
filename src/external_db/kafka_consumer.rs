@@ -79,8 +79,8 @@ impl KafkaConsumer {
             let now = std::time::Instant::now();
             if let Some(payload) = rdkafka::Message::payload(&borrowed_message) {
                 writer::write_message(
-                    format!("Message from kafka (description: {})", message_descr),
-                    &hex::encode(&patload),
+                    &format!("Message from kafka (description: {})", message_descr),
+                    &hex::encode(&payload),
                 );
                 log::trace!("Processing record, {:?}", payload);
                 match self.engine.redirect_external_message(&payload).await {
