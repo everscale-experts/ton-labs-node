@@ -62,6 +62,8 @@ impl KafkaConsumer {
         log::trace!("Subscribing...");
         consumer.subscribe(&[&self.config.topic])?;
 
+        println!("Starting kafka consumer. Broker: {}", &self.config.brokers);
+
         log::trace!("Starting consumer...");
         let (trigger, tripwire) = stream_cancel::Tripwire::new();
         let mut message_stream = consumer.stream().take_until_if(tripwire);
@@ -76,6 +78,10 @@ impl KafkaConsumer {
                 borrowed_message.topic(), borrowed_message.partition(), borrowed_message.offset());
             let now = std::time::Instant::now();
             if let Some(payload) = rdkafka::Message::payload(&borrowed_message) {
+                writer::write_message(
+                    format!("Message from kafka (description: {})", message_descr),
+                    &hex::encode(&patload),
+                );
                 log::trace!("Processing record, {:?}", payload);
                 match self.engine.redirect_external_message(&payload).await {
                     Ok(info) => log::trace!("count number of nodes to broadcast to: {}", info.send_to),

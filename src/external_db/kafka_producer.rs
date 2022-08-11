@@ -40,9 +40,11 @@ impl KafkaProducer {
             .unwrap_or("unknown")
             .to_owned();
         if !config.enabled {
+            println!("Kafka producer (topic: {}) is DISABLED", topic_log_name);
             log::trace!("Kafka producer (topic: {}) is DISABLED", topic_log_name);
             Ok(Self { config, producer: None, topic: TopicConfig::Single(topic_log_name) })
         } else {
+            println!("Creating kafka producer (topic: {}, brokers: {})", topic_log_name, &config.brokers);
             log::trace!("Creating kafka producer (topic: {})...", topic_log_name);
             let producer = rdkafka::config::ClientConfig::new()
                 .set("bootstrap.servers", &config.brokers)
