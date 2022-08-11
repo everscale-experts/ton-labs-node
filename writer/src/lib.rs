@@ -61,6 +61,7 @@ pub fn set_path(debuglog_path: Option<String>) {
     if let Some(path) = debuglog_path {
         unsafe {
             if !std::path::Path::new(&path).exists() {
+                println!("debugLog doesn`t exist, creating... ({})", &path);
                 fs::create_dir_all(&path).ok();
             }
             DEBUGLOG_PATH = path.clone();
