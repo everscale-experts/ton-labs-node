@@ -70,7 +70,5 @@ pub fn set_path(debuglog_path: Option<String>) {
 }
 
 pub fn set_default_debuglog_path() {
-    unsafe {
-        DEBUGLOG_PATH = String::from("./debugLog");
-    }
+    set_path(Some(String::from("./debugLog")));
 }
