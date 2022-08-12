@@ -368,6 +368,10 @@ impl SessionProcessor for SessionProcessorImpl {
             payload_len,
             deps_len
         );
+        writer::write_message(
+            "received block from with payload (validator)",
+            &hex::encode(block.get_payload().data().to_vec())
+        );
 
         //parse payload
 

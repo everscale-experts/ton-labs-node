@@ -239,6 +239,8 @@ impl Receiver for ReceiverImpl {
         check_execution_time!(50000);
         instrument!();
 
+        writer::write_message("query from overlay (catchain)", &hex::encode(data.data().to_vec()));
+
         let source = self.get_source_by_adnl_id(adnl_id);
 
         if let Some(ref source) = source {
@@ -290,6 +292,11 @@ impl Receiver for ReceiverImpl {
         payload: BlockPayloadPtr,
     ) -> Result<ReceivedBlockPtr> {
         instrument!();
+
+        writer::write_message(
+            "receive_block (catchain, adnl)",
+            &hex::encode(payload.data().to_vec())
+        );
 
         let id = self.get_block_id(&block, payload.data());
         let hash = get_block_id_hash(&id);
@@ -469,6 +476,11 @@ impl Receiver for ReceiverImpl {
         data: &BlockPayloadPtr,
     ) {
         instrument!();
+
+        writer::write_message(
+            "received broadcast from overlay (catchain)",
+            &hex::encode(data.data().to_vec())
+        );
 
         if let Some(ref source) = self.get_source_by_hash(source_key_hash) {
             source.borrow_mut().get_mut_statistics().in_broadcasts_count += 1;
@@ -1343,6 +1355,11 @@ impl ReceiverImpl {
 
         reader.read_to_end(&mut payload).unwrap();
 
+        writer::write_message(
+            "read_block_from_db (catchain, receiver)",
+            &hex::encode(&payload)
+        );
+
         let payload = CatchainFactory::create_block_payload(ton_api::ton::bytes(payload));
 
         //check block ID
@@ -1542,9 +1559,13 @@ impl ReceiverImpl {
 
         let get_difference_response_handler =
             |result: Result<ton::GetDifferenceResponse>,
-             _payload: BlockPayloadPtr,
+             payload: BlockPayloadPtr,
              receiver: &mut dyn Receiver| {
                 use ton_api::ton::catchain::*;
+                writer::write_message(
+                    "received query from {} (catchain, receiver, syncronize_with)",
+                    &hex::encode(payload.data().to_vec())
+                );
 
                 match result {
                     Err(err) => {
@@ -1672,6 +1693,11 @@ impl ReceiverImpl {
         instrument!();
 
         trace!("Receiver: received query from {}: {:?}", adnl_id, data);
+
+        writer::write_message(
+            &format!("received query from {} (catchain, receiver)", adnl_id),
+            &hex::encode(data.data().to_vec())
+        );
 
         match ton_api::Deserializer::new(&mut &data.data().0[..])
             .read_boxed::<ton_api::ton::TLObject>()

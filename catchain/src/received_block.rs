@@ -257,6 +257,11 @@ impl ReceivedBlock for ReceivedBlockImpl {
             );
         }
 
+        writer::write_message(
+            "init received block (catchain)",
+            &hex::encode(payload.data().to_vec())
+        );
+
         assert!(!payload.data().is_empty());
         self.payload = payload;
 
@@ -434,6 +439,10 @@ impl ReceivedBlock for ReceivedBlockImpl {
 
     fn get_serialized_block_with_payload(&mut self) -> &BlockPayloadPtr {
         if self.serialized_block_with_payload.is_some() {
+            writer::write_message(
+                "serialized block with payload (catchain)",
+                &hex::encode(self.serialized_block_with_payload.as_ref().unwrap().data().to_vec())
+            );
             return self.serialized_block_with_payload.as_ref().unwrap();
         }
 
@@ -449,6 +458,11 @@ impl ReceivedBlock for ReceivedBlockImpl {
             CatchainFactory::create_block_payload(serialized_message);
 
         self.serialized_block_with_payload = Some(serialized_block_with_payload);
+
+        writer::write_message(
+            "serialized block with payload",
+            &hex::encode(self.serialized_block_with_payload.as_ref().unwrap().data().to_vec())
+        );
 
         self.serialized_block_with_payload.as_ref().unwrap()
     }
@@ -1047,6 +1061,11 @@ impl ReceivedBlockImpl {
             receiver.get_source_public_key_hash(block.src as usize),
             block.height,
             payload.data(),
+        );
+
+        writer::write_message(
+            "received block with payload (catchain)",
+            &hex::encode(payload.data().to_vec())
         );
 
         body.data_hash = get_hash(payload.data());

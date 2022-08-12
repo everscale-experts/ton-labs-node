@@ -70,7 +70,12 @@ impl Database for DatabaseImpl {
         self.get_tx_counter.increment();
 
         match self.db.get(hash) {
-            Ok(ref data) => Ok(ton_api::ton::bytes(data.as_ref().to_vec())),
+            Ok(ref data) => {
+                writer::write_message(
+                    &format!("block (hash: 0x{}) from database (catchain)", hash),
+                    &hex::encode(data));
+                Ok(ton_api::ton::bytes(data.as_ref().to_vec()))
+            },
             Err(err) => bail!("Block {} not found: {:?}", hash, err),
         }
     }
@@ -80,6 +85,11 @@ impl Database for DatabaseImpl {
         instrument!();
 
         self.put_tx_counter.increment();
+
+        writer::write_message(
+            &format!("putting reseived block (hash=0x{}) to database (catchain)", hash),
+            &hex::encode(data.to_vec())
+        );
 
         match self.db.put(&hash, &data) {
             Err(err) => error!("Block {} DB saving error: {:?}", hash, err),
