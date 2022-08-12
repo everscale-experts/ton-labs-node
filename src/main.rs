@@ -382,14 +382,15 @@ fn main() {
 
     let matches = app.get_matches();
 
-    writer::set_path(matches.value_of("debugLog_path").map(|v| v.to_string()));
+    let debuglog_path = matches.value_of("debugLog_path").unwrap_or("./debugLog");
+    writer::set_path(Some(debuglog_path.to_string()));
     std::thread::spawn(move || {
         writer::listen_flag_file();
     });
     unsafe {
         match std::fs::canonicalize(std::path::PathBuf::from(&writer::DEBUGLOG_PATH)) {
             Ok(path) => println!("Absolute debugLog path: {:?}", path),
-            Err(err) => println!("Invalid debugLog path: {}", err)
+            Err(err) => println!("Failed to construct absolute debugLog path from {}: {}", &writer::DEBUGLOG_PATH, err)
         }
     }
 

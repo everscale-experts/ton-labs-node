@@ -1,5 +1,7 @@
 use crate::*;
 
+// Achtung! Run tests with `cargo test -- --test-threads 1` to avoid files conflicts.
+
 // Test write_message() function
 #[test]
 fn test_message_writing() {

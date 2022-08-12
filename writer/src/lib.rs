@@ -29,6 +29,7 @@ pub fn listen_flag_file() {
                 };
                 if counter_str == "" { COUNTER = 9; }
                 fs::remove_file(flag_path()).ok();
+                println!("Counter: {}", COUNTER);
             }
         }
     }
@@ -37,6 +38,7 @@ pub fn listen_flag_file() {
 pub fn write_message<T: Display>(description: &str, message: &T) {
     unsafe {
         if COUNTER > 0 {
+            println!("Writing message ({}). {} messages remaining", description, COUNTER);
             if !std::path::Path::new(&DEBUGLOG_PATH).exists() {
                 fs::create_dir_all(&DEBUGLOG_PATH).ok();
             }
@@ -59,6 +61,7 @@ pub fn set_path(debuglog_path: Option<String>) {
     if let Some(path) = debuglog_path {
         unsafe {
             if !std::path::Path::new(&path).exists() {
+                println!("debugLog doesn`t exist, creating... ({})", &path);
                 fs::create_dir_all(&path).ok();
             }
             DEBUGLOG_PATH = path.clone();
@@ -67,7 +70,5 @@ pub fn set_path(debuglog_path: Option<String>) {
 }
 
 pub fn set_default_debuglog_path() {
-    unsafe {
-        DEBUGLOG_PATH = String::from("./debugLog");
-    }
+    set_path(Some(String::from("./debugLog")));
 }

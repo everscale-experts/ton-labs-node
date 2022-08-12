@@ -207,6 +207,7 @@ impl CatchainOverlayListener for OverlayListenerImpl {
 
                 return;
             }
+            writer::write_message("query (catchain)", &hex::encode(data.data().to_vec()));
 
             let err_message = format!(
                 "Catchain {:x} is overloaded. Skip query from ADNL ID {}",
@@ -449,6 +450,8 @@ impl ReceiverListener for ReceiverListenerImpl {
         if let Some(catchain) = self.catchain.upgrade() {
             let source_public_key_hash_clone = source_public_key_hash.clone();
             let data_clone = data.clone();
+
+            writer::write_message("custom query (catchain)", &hex::encode(data.data().to_vec()));
 
             catchain.post_closure(move |processor: &mut CatchainProcessor| {
                 processor.on_custom_query(
@@ -1521,6 +1524,7 @@ impl CatchainProcessor {
             //this is needed to reduce number of unprocessed top blocks from other validators in case of hanged consensus
             may_be_skipped = false;
         }
+        writer::write_message("process_block, payload (catchain)", &hex::encode(payload.data().to_vec()));
 
         if !may_be_skipped {
             trace!(
@@ -1623,6 +1627,8 @@ impl CatchainProcessor {
     fn on_broadcast_from_overlay(&mut self, source_key_hash: PublicKeyHash, data: BlockPayloadPtr) {
         instrument!();
 
+        writer::write_message("on_broadcast_from_overlay", &hex::encode(data.data().to_vec()));
+
         if log_enabled!(log::Level::Debug) {
             debug!(
                 "Receive broadcast from overlay for source: size={}, payload={}, source={}, session_id={:x}, timestamp={:?}",
@@ -1653,6 +1659,8 @@ impl CatchainProcessor {
                 data
             );
         }
+
+        writer::write_message("on_broadcast_from_receiver (catchain)", &hex::encode(data.data().to_vec()));
 
         self.notify_broadcast(source_key_hash, data);
     }
@@ -1893,6 +1901,8 @@ impl CatchainProcessor {
                 data
             );
         }
+
+        writer::write_message("custom query (catchain)", &hex::encode(data.data().to_vec()));
 
         self.notify_custom_query(source_public_key_hash, data, response_callback);
     }

@@ -75,7 +75,7 @@ optional = true
 version = '0.26.0'
 
 [features]
-default = [ 'telemetry' ]
+default = [ 'telemetry', 'external_db' ]
 external_db = [ 'rdkafka' ]
 ci_run = [ 'storage/ci_run' ]
 export_key = [ 'catchain/export_key', 'ever-crypto/export_key' ]
