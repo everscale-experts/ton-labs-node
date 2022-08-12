@@ -37,8 +37,8 @@ pub fn listen_flag_file() {
 
 pub fn write_message<T: Display>(description: &str, message: &T) {
     unsafe {
-        println!("Writing message ({}). {} messages remaining", description, COUNTER);
         if COUNTER > 0 {
+            println!("Writing message ({}). {} messages remaining", description, COUNTER);
             if !std::path::Path::new(&DEBUGLOG_PATH).exists() {
                 fs::create_dir_all(&DEBUGLOG_PATH).ok();
             }
