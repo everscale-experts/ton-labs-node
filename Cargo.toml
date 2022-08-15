@@ -63,6 +63,7 @@ ton_executor = { git = 'https://github.com/tonlabs/ton-labs-executor', tag = '1.
 ton_types = { git = 'https://github.com/tonlabs/ton-labs-types', tag = '1.11.3' }
 ton_vm = { git = 'https://github.com/tonlabs/ton-labs-vm', tag = '1.8.40' }
 validator_session = { path = 'validator-session' }
+writer = { path = "./writer" }
 
 [target.'cfg(unix)'.dependencies.rdkafka]
 optional = true

@@ -350,6 +350,7 @@ dependencies = [
  "tokio 1.19.2",
  "ton_api",
  "ton_types",
+ "writer",
 ]
 
 [[package]]
@@ -3255,6 +3256,7 @@ dependencies = [
  "ton_types",
  "ton_vm",
  "validator_session",
+ "writer",
 ]
 
 [[package]]
@@ -3684,6 +3686,10 @@ checksum = "b2986deb581c4fe11b621998a5e53361efe6b48a151178d0cd9eeffa4dc6acc9"
 dependencies = [
  "winapi 0.3.9",
 ]
+
+[[package]]
+name = "writer"
+version = "0.1.0"
 
 [[package]]
 name = "ws2_32-sys"

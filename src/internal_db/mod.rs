@@ -668,10 +668,6 @@ impl InternalDb {
         // TODO read directly from file without huge vector
 
         let data = self.shard_state_persistent_db.get_vec(id, 0, full_lenth).await?;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "load ss persistent: {}", hex::encode(&data)).unwrap();
-		panic!();
         ShardStateStuff::deserialize_inmem(
             id.clone(),
             Arc::new(data),

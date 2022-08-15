@@ -494,10 +494,6 @@ impl LogPlayerImpl {
         let parse_data = Rc::new(move |message_type, captures: &Captures| {
             let data_size: u32 = captures.get(1).unwrap().as_str().parse().unwrap();
             let data = &captures.get(2).unwrap().as_str();
-			use std::io::Write;
-			let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-			writeln!(file, "parse_data: {}", data).unwrap();
-			panic!();
             let bytes = parse_hex(&data);
             let source_id = &captures.get(3).unwrap().as_str();
             let source_id = utils::parse_hex_as_public_key_hash(&source_id);

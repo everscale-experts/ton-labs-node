@@ -29,6 +29,7 @@ rldp = { git = 'https://github.com/tonlabs/ton-labs-rldp', tag = '0.7.69' }
 storage = { path = '../storage' }
 ton_api = { git = 'https://github.com/tonlabs/ton-labs-tl', package = 'ton_api', tag = '0.2.129' }
 ton_types = { git = 'https://github.com/tonlabs/ton-labs-types', tag = '1.11.3' }
+writer = { path = "../writer" }
 
 [features]
 default = [  ]
