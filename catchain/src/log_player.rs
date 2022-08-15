@@ -564,6 +564,10 @@ impl LogPlayerImpl {
             //debug!("LogReplay: received {} from source {} for overlay {}: {:?}", message_type, &source_id, block_session_id.to_hex_string(), data);
 
             if let Some(listener) = listener.upgrade() {
+                writer::write_message(
+                    &format!("message (type: {}) from ADNL (id: {})", message_type, source_id.clone()),
+                    &hex::encode(&bytes.to_vec()),
+                );
                 match message_type {
                     "block" => listener.on_message(
                         source_id.clone(),

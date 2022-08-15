@@ -172,10 +172,10 @@ impl CatchainOverlayListener for OverlayListenerImpl {
         if let Some(catchain) = self.catchain.upgrade() {
             let adnl_id = adnl_id.clone();
             let data = data.clone();
-            writer::write_message(
-                &format!("message from ADNL (id: {})", adnl_id.clone()),
-                &hex::encode(&data.data().to_vec()),
-            );
+            // writer::write_message(
+            //     &format!("message (block) from ADNL (id: {})", adnl_id.clone()),
+            //     &hex::encode(&data.data().to_vec()),
+            // );
 
             catchain.post_closure(move |processor: &mut CatchainProcessor| {
                 processor.on_message(adnl_id, data);

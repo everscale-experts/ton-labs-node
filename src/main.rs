@@ -34,7 +34,6 @@ mod sync;
 mod types;
 mod validating_utils;
 mod validator;
-mod counter;
 
 #[cfg(feature = "tracing")]
 mod jaeger;
