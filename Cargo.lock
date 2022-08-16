@@ -26,7 +26,7 @@ dependencies = [
  "async-trait",
  "base64 0.13.0",
  "curve25519-dalek",
- "ever-crypto 0.1.29",
+ "ever-crypto",
  "external-ip",
  "failure",
  "futures",
@@ -41,38 +41,8 @@ dependencies = [
  "tokio 1.20.1",
  "tokio-io-timeout",
  "tokio-stream",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_types 1.11.3",
- "x25519-dalek",
- "zstd",
-]
-
-[[package]]
-name = "adnl"
-version = "0.7.77"
-source = "git+https://github.com/tonlabs/ton-labs-adnl.git?tag=0.7.77#1cacf2faa61714055f75968f8ad6efadf4f87aa1"
-dependencies = [
- "aes-ctr",
- "async-trait",
- "base64 0.13.0",
- "curve25519-dalek",
- "ever-crypto 0.1.35",
- "external-ip",
- "failure",
- "futures",
- "lockfree",
- "log 0.4.17",
- "num_cpus",
- "rand 0.7.3",
- "serde 1.0.143",
- "serde_json",
- "socket2 0.3.19",
- "stream-cancel",
- "tokio 1.20.1",
- "tokio-io-timeout",
- "tokio-stream",
- "ton_api 0.2.131",
- "ton_types 1.11.4",
  "x25519-dalek",
  "zstd",
 ]
@@ -373,12 +343,12 @@ dependencies = [
 name = "catchain"
 version = "0.1.0"
 dependencies = [
- "adnl 0.7.75",
+ "adnl",
  "base64 0.13.0",
  "chrono 0.4.22",
  "crossbeam 0.7.3",
  "ed25519-dalek",
- "ever-crypto 0.1.29",
+ "ever-crypto",
  "failure",
  "futures",
  "hex 0.4.3",
@@ -386,14 +356,14 @@ dependencies = [
  "log 0.4.17",
  "metrics-core",
  "metrics-runtime",
- "overlay 0.6.61",
+ "overlay",
  "rand 0.8.5",
  "regex",
- "rldp 0.7.69 (git+https://github.com/JavaharlalN/ton-labs-rldp)",
+ "rldp",
  "sha2 0.9.9",
  "storage",
  "tokio 1.20.1",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_types 1.11.3",
  "writer",
 ]
@@ -715,21 +685,21 @@ dependencies = [
 
 [[package]]
 name = "dht"
-version = "0.5.72"
-source = "git+https://github.com/tonlabs/ton-labs-dht?tag=0.5.72#2ba51d586e0d1bfe6f58da6f0b87da1990cd964d"
+version = "0.5.74"
+source = "git+https://github.com/JavaharlalN/ton-labs-dht#457d5e7a1e0aab2d814fa9cc6e807f40ebf950d4"
 dependencies = [
- "adnl 0.7.75",
+ "adnl",
  "async-trait",
  "base64 0.13.0",
- "ever-crypto 0.1.29",
+ "ever-crypto",
  "failure",
  "hex 0.4.3",
  "lockfree",
  "log 0.4.17",
- "overlay 0.6.59",
+ "overlay",
  "rand 0.8.5",
  "tokio 1.20.1",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_types 1.11.3",
 ]
 
@@ -847,30 +817,8 @@ dependencies = [
  "serde_json",
  "sha2 0.9.9",
  "tokio 1.20.1",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_types 1.11.3",
- "x25519-dalek",
-]
-
-[[package]]
-name = "ever-crypto"
-version = "0.1.35"
-source = "git+https://github.com/tonlabs/ever-labs-crypto.git?tag=0.1.35#1eba8cdc9fda2b3a506a7de6a69c44cc8086a610"
-dependencies = [
- "aes-ctr",
- "async-trait",
- "base64 0.13.0",
- "curve25519-dalek",
- "ed25519",
- "ed25519-dalek",
- "failure",
- "rand 0.7.3",
- "serde 1.0.143",
- "serde_json",
- "sha2 0.9.9",
- "tokio 1.20.1",
- "ton_api 0.2.131",
- "ton_types 1.11.4",
  "x25519-dalek",
 ]
 
@@ -2064,9 +2012,9 @@ checksum = "a9a7ab5d64814df0fe4a4b5ead45ed6c5f181ee3ff04ba344313a6c80446c5d4"
 
 [[package]]
 name = "once_cell"
-version = "1.13.0"
+version = "1.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "18a6dbe30758c9f83eb00cbea4ac95966305f5a7772f3f42ebfc7fc7eddbd8e1"
+checksum = "074864da206b4973b84eb91683020dbefd6a8c3f0f38e054d93954e891935e4e"
 
 [[package]]
 name = "opaque-debug"
@@ -2145,46 +2093,24 @@ dependencies = [
 
 [[package]]
 name = "overlay"
-version = "0.6.59"
-source = "git+https://github.com/tonlabs/ton-labs-overlay?tag=0.6.59#f3a693af3aba25454349d98f1ff2773cbe6f40cb"
-dependencies = [
- "adnl 0.7.75",
- "async-trait",
- "base64 0.13.0",
- "ever-crypto 0.1.29",
- "failure",
- "hex 0.4.3",
- "lockfree",
- "log 0.4.17",
- "rand 0.7.3",
- "rldp 0.7.69 (git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.69)",
- "sha2 0.9.9",
- "tokio 1.20.1",
- "ton_api 0.2.129",
- "ton_block 1.8.0",
- "ton_types 1.11.3",
-]
-
-[[package]]
-name = "overlay"
 version = "0.6.61"
-source = "git+https://github.com/JavaharlalN/ton-labs-overlay#a692f1a9585e29b8e2acd72e8d0b47025c7fd451"
+source = "git+https://github.com/JavaharlalN/ton-labs-overlay#e3c4e4dd0f5b469c683dcb3040c4a119563118bb"
 dependencies = [
- "adnl 0.7.77",
+ "adnl",
  "async-trait",
  "base64 0.13.0",
- "ever-crypto 0.1.35",
+ "ever-crypto",
  "failure",
  "hex 0.4.3",
  "lockfree",
  "log 0.4.17",
  "rand 0.7.3",
- "rldp 0.7.71",
+ "rldp",
  "sha2 0.9.9",
  "tokio 1.20.1",
- "ton_api 0.2.131",
+ "ton_api",
  "ton_block 1.8.3",
- "ton_types 1.11.4",
+ "ton_types 1.11.3",
 ]
 
 [[package]]
@@ -2501,22 +2427,6 @@ dependencies = [
 [[package]]
 name = "raptorq"
 version = "1.2.1"
-source = "git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.69#8a37c848a9a70be0388c63f4f1c3456cb02323d6"
-dependencies = [
- "serde 1.0.143",
-]
-
-[[package]]
-name = "raptorq"
-version = "1.2.1"
-source = "git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.71#1ad4813de3c19b7fce7611984830801431ebb0f6"
-dependencies = [
- "serde 1.0.143",
-]
-
-[[package]]
-name = "raptorq"
-version = "1.2.1"
 source = "git+https://github.com/JavaharlalN/ton-labs-rldp#1ea52fbc85a17a956aee959602887a3e4f070d82"
 dependencies = [
  "serde 1.0.143",
@@ -2626,60 +2536,22 @@ dependencies = [
 [[package]]
 name = "rldp"
 version = "0.7.69"
-source = "git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.69#8a37c848a9a70be0388c63f4f1c3456cb02323d6"
-dependencies = [
- "adnl 0.7.75",
- "async-trait",
- "base64 0.13.0",
- "ever-crypto 0.1.29",
- "failure",
- "lockfree",
- "log 0.4.17",
- "rand 0.7.3",
- "raptorq 1.2.1 (git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.69)",
- "tokio 1.20.1",
- "ton_api 0.2.129",
- "ton_types 1.11.3",
-]
-
-[[package]]
-name = "rldp"
-version = "0.7.69"
 source = "git+https://github.com/JavaharlalN/ton-labs-rldp#1ea52fbc85a17a956aee959602887a3e4f070d82"
 dependencies = [
- "adnl 0.7.75",
+ "adnl",
  "async-trait",
  "base64 0.13.0",
- "ever-crypto 0.1.29",
+ "ever-crypto",
  "failure",
  "hex 0.4.3",
  "lockfree",
  "log 0.4.17",
  "rand 0.7.3",
- "raptorq 1.2.1 (git+https://github.com/JavaharlalN/ton-labs-rldp)",
+ "raptorq",
  "tokio 1.20.1",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_types 1.11.3",
  "writer",
-]
-
-[[package]]
-name = "rldp"
-version = "0.7.71"
-source = "git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.71#1ad4813de3c19b7fce7611984830801431ebb0f6"
-dependencies = [
- "adnl 0.7.77",
- "async-trait",
- "base64 0.13.0",
- "ever-crypto 0.1.35",
- "failure",
- "lockfree",
- "log 0.4.17",
- "rand 0.7.3",
- "raptorq 1.2.1 (git+https://github.com/tonlabs/ton-labs-rldp.git?tag=0.7.71)",
- "tokio 1.20.1",
- "ton_api 0.2.131",
- "ton_types 1.11.4",
 ]
 
 [[package]]
@@ -2977,7 +2849,7 @@ dependencies = [
 name = "storage"
 version = "0.5.0"
 dependencies = [
- "adnl 0.7.75",
+ "adnl",
  "async-trait",
  "base64 0.13.0",
  "cc",
@@ -2999,7 +2871,7 @@ dependencies = [
  "strum",
  "strum_macros",
  "tokio 1.20.1",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_block 1.8.0",
  "ton_types 1.11.3",
 ]
@@ -3323,28 +3195,8 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "ton_block 1.8.0",
- "ton_tl_codegen 0.0.2 (git+https://github.com/tonlabs/ton-labs-tl?tag=0.2.129)",
+ "ton_tl_codegen",
  "ton_types 1.11.3",
-]
-
-[[package]]
-name = "ton_api"
-version = "0.2.131"
-source = "git+https://github.com/tonlabs/ton-labs-tl.git?tag=0.2.131#f723789f6e48facdb53898c31f5c8ed2dda2df00"
-dependencies = [
- "byteorder",
- "extfmt",
- "failure",
- "hex 0.4.3",
- "lazy_static",
- "ordered-float 2.10.0",
- "secstr",
- "serde 1.0.143",
- "serde_derive",
- "serde_json",
- "ton_block 1.8.3",
- "ton_tl_codegen 0.0.2 (git+https://github.com/tonlabs/ton-labs-tl.git?tag=0.2.131)",
- "ton_types 1.11.4",
 ]
 
 [[package]]
@@ -3396,7 +3248,7 @@ dependencies = [
  "serde 1.0.143",
  "serde_derive",
  "serde_json",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_block 1.8.0",
  "ton_types 1.11.3",
 ]
@@ -3418,7 +3270,7 @@ dependencies = [
 name = "ton_node"
 version = "0.50.23"
 dependencies = [
- "adnl 0.7.75",
+ "adnl",
  "async-recursion",
  "async-trait",
  "base64 0.13.0",
@@ -3432,7 +3284,7 @@ dependencies = [
  "dht",
  "dirs",
  "env_logger",
- "ever-crypto 0.1.29",
+ "ever-crypto",
  "failure",
  "futures",
  "futures-timer",
@@ -3444,11 +3296,11 @@ dependencies = [
  "log4rs-rolling-file",
  "num-bigint",
  "openssl",
- "overlay 0.6.61",
+ "overlay",
  "rand 0.7.3",
  "rdkafka",
  "regex",
- "rldp 0.7.69 (git+https://github.com/JavaharlalN/ton-labs-rldp)",
+ "rldp",
  "rustracing",
  "rustracing_jaeger",
  "serde 1.0.143",
@@ -3462,7 +3314,7 @@ dependencies = [
  "string-builder",
  "tokio 1.20.1",
  "ton_abi",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_block 1.8.0",
  "ton_block_json",
  "ton_executor",
@@ -3476,21 +3328,6 @@ dependencies = [
 name = "ton_tl_codegen"
 version = "0.0.2"
 source = "git+https://github.com/tonlabs/ton-labs-tl?tag=0.2.129#404e7b9f219fc20b04b773a9a3f3a481ed03a0bf"
-dependencies = [
- "crc 1.8.1",
- "failure",
- "pom",
- "proc-macro2",
- "quote",
- "serde 1.0.143",
- "serde_derive",
- "syn",
-]
-
-[[package]]
-name = "ton_tl_codegen"
-version = "0.0.2"
-source = "git+https://github.com/tonlabs/ton-labs-tl.git?tag=0.2.131#f723789f6e48facdb53898c31f5c8ed2dda2df00"
 dependencies = [
  "crc 1.8.1",
  "failure",
@@ -3767,7 +3604,7 @@ dependencies = [
  "catchain",
  "crc 3.0.0",
  "crossbeam 0.7.3",
- "ever-crypto 0.1.29",
+ "ever-crypto",
  "failure",
  "hex 0.4.3",
  "lazy_static",
@@ -3777,7 +3614,7 @@ dependencies = [
  "rand 0.8.5",
  "sha2 0.9.9",
  "storage",
- "ton_api 0.2.129",
+ "ton_api",
  "ton_block 1.8.0",
  "ton_types 1.11.3",
 ]
