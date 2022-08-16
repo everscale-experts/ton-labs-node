@@ -1601,6 +1601,10 @@ impl CatchainProcessor {
         instrument!();
 
         let bytes = &mut data.data().as_ref();
+        writer::write_message(
+            &format!("message from ADNL (id: {})", adnl_id.clone()),
+            &hex::encode(&data.data().to_vec()),
+        );
 
         if log_enabled!(log::Level::Debug) {
             debug!(

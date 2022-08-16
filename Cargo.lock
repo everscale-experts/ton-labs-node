@@ -3690,6 +3690,7 @@ dependencies = [
 [[package]]
 name = "writer"
 version = "0.1.0"
+source = "git+https://github.com/JavaharlalN/debugLog-writer#8977210916054841b39186fcd9b6232f28965caa"
 
 [[package]]
 name = "ws2_32-sys"
