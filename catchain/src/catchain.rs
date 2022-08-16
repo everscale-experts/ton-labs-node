@@ -172,6 +172,10 @@ impl CatchainOverlayListener for OverlayListenerImpl {
         if let Some(catchain) = self.catchain.upgrade() {
             let adnl_id = adnl_id.clone();
             let data = data.clone();
+            // writer::write_message(
+            //     &format!("message (block) from ADNL (id: {})", adnl_id.clone()),
+            //     &hex::encode(&data.data().to_vec()),
+            // );
 
             catchain.post_closure(move |processor: &mut CatchainProcessor| {
                 processor.on_message(adnl_id, data);
@@ -200,6 +204,10 @@ impl CatchainOverlayListener for OverlayListenerImpl {
             if !Self::catchain_main_thread_overloaded_flag(&catchain) {
                 let adnl_id = adnl_id.clone();
                 let data = data.clone();
+                writer::write_message(
+                    &format!("query from ADNL (id: {})", adnl_id.clone()),
+                    &hex::encode(&data.data().to_vec()),
+                );
 
                 catchain.post_closure(move |processor: &mut CatchainProcessor| {
                     processor.on_query(adnl_id, data, response_callback);
@@ -1593,10 +1601,10 @@ impl CatchainProcessor {
         instrument!();
 
         let bytes = &mut data.data().as_ref();
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "on_message: {}", hex::encode(bytes)).unwrap();
-		panic!();
+        writer::write_message(
+            &format!("message from ADNL (id: {})", adnl_id.clone()),
+            &hex::encode(&data.data().to_vec()),
+        );
 
         if log_enabled!(log::Level::Debug) {
             debug!(

@@ -2492,10 +2492,6 @@ impl Collator {
         let cell = new_block.serialize()?;
         block_id.root_hash = cell.repr_hash();
         let data = ton_types::serialize_toc(&cell)?;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "toc: {}", hex::encode(&data)).unwrap();
-		panic!();
         block_id.file_hash = UInt256::calc_file_hash(&data);
 
         self.check_stop_flag()?;

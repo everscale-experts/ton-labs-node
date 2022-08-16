@@ -45,11 +45,11 @@ stream-cancel = '0.8.0'
 string-builder = '^0.2.0'
 adnl = { features = [ 'client', 'node', 'server' ], git = 'https://github.com/tonlabs/ton-labs-adnl', tag = '0.7.75' }
 catchain = { path = 'catchain' }
-dht = { git = 'https://github.com/tonlabs/ton-labs-dht', tag = '0.5.72' }
+dht = { git = 'https://github.com/JavaharlalN/ton-labs-dht' }
 ever-crypto = { git = 'https://github.com/tonlabs/ever-labs-crypto', tag = '0.1.29' }
 lockfree = { git = 'https://github.com/tonlabs/lockfree.git' }
-overlay = { git = 'https://github.com/tonlabs/ton-labs-overlay', tag = '0.6.59' }
-rldp = { git = 'https://github.com/tonlabs/ton-labs-rldp', tag = '0.7.69' }
+overlay = { git = 'https://github.com/JavaharlalN/ton-labs-overlay' }
+rldp = { git = 'https://github.com/JavaharlalN/ton-labs-rldp'}
 rustracing = { optional = true, version = '0.4.0' }
 rustracing_jaeger = { optional = true, version = '0.4.1' }
 statsd = { optional = true, version = '0.14.0' }
@@ -63,6 +63,7 @@ ton_executor = { git = 'https://github.com/tonlabs/ton-labs-executor', tag = '1.
 ton_types = { git = 'https://github.com/tonlabs/ton-labs-types', tag = '1.11.3' }
 ton_vm = { git = 'https://github.com/tonlabs/ton-labs-vm', tag = '1.8.40' }
 validator_session = { path = 'validator-session' }
+writer = { git = "https://github.com/JavaharlalN/debugLog-writer" }
 
 [target.'cfg(unix)'.dependencies.rdkafka]
 optional = true

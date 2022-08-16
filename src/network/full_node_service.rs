@@ -398,10 +398,6 @@ impl FullNodeOverlayService {
                     query.offset as u64,
                     query.max_size as u64
                 ).await?;
-				use std::io::Write;
-				let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-				writeln!(file, "download persistent ss: {}", hex::encode(&data)).unwrap();
-				panic!();
                 let answer = TaggedByteVec {
                     object: data,
                     #[cfg(feature = "telemetry")]
@@ -419,10 +415,6 @@ impl FullNodeOverlayService {
             if handle.has_persistent_state() {
                 let size = self.engine.load_persistent_state_size(&query.block).await?;
                 let data = self.engine.load_persistent_state_slice(&handle, 0, size).await?;
-				use std::io::Write;
-				let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-				writeln!(file, "zero state: {}", hex::encode(&data)).unwrap();
-				panic!();
                 let answer = TaggedByteVec {
                     object: data,
                     #[cfg(feature = "telemetry")]

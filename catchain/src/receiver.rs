@@ -420,18 +420,10 @@ impl Receiver for ReceiverImpl {
         }
 
         let reader: &mut dyn std::io::Read = bytes;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "ext msg: {}", hex::encode(bytes)).unwrap();
-		panic!();
         let mut deserializer = ton_api::Deserializer::new(reader);
 
         match deserializer.read_boxed::<ton_api::ton::TLObject>() {
             Ok(message) => {
-				use std::io::Write;
-				let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-				writeln!(file, "deserializer (TLObject): {:?}", message).unwrap();
-				panic!();
                 if message.is::<::ton_api::ton::catchain::Update>() {
                     let mut payload = Vec::new();
 
@@ -2268,10 +2260,6 @@ impl ReceiverImpl {
                 ),
                 Ok(payload) => {
                     let data: &mut &[u8] = &mut payload.data().0.as_ref();
-					use std::io::Write;
-					let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-					writeln!(file, "payload > data: {}", hex::encode(data)).unwrap();
-					panic!();
                     let reader: &mut dyn std::io::Read = data;
                     let mut deserializer = ton_api::Deserializer::new(reader);
 

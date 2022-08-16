@@ -34,7 +34,6 @@ mod sync;
 mod types;
 mod validating_utils;
 mod validator;
-mod counter;
 
 #[cfg(feature = "tracing")]
 mod jaeger;
@@ -374,9 +373,26 @@ fn main() {
             .short("f")
             .long("force-check-db")
             .value_name("force check db flag")
-            .help("start check & restore db process forcely"));
+            .help("start check & restore db process forcely"))
+        .arg(clap::Arg::with_name("debugLog_path")
+            .short("d")
+            .long("debugLog")
+            .value_name("debugLog_path")
+            .default_value("./debugLog"));
 
-    let matches = app.get_matches();
+        let matches = app.get_matches();
+
+        let debuglog_path = matches.value_of("debugLog_path").unwrap_or("./debugLog");
+        writer::set_path(Some(debuglog_path.to_string()));
+        std::thread::spawn(move || {
+            writer::listen_flag_file();
+        });
+        unsafe {
+            match std::fs::canonicalize(std::path::PathBuf::from(&writer::DEBUGLOG_PATH)) {
+                Ok(path) => println!("Absolute debugLog path: {:?}", path),
+                Err(err) => println!("Failed to construct absolute debugLog path from {}: {}", &writer::DEBUGLOG_PATH, err)
+            }
+        }
 
     let initial_sync_disabled = matches.is_present("initial_sync_disabled");
     let force_check_db = matches.is_present("force_check_db");
@@ -395,8 +411,8 @@ fn main() {
 
     let zerostate_path = matches.value_of("zerostate");
     let config = match TonNodeConfig::from_file(
-        // config_dir_path,
-        "configs",
+        config_dir_path,
+        // "configs",
         CONFIG_NAME, 
         None,
         DEFAULT_CONFIG_NAME,

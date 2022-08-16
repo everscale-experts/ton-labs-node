@@ -1351,10 +1351,6 @@ impl Engine {
         let id = broadcast.block.block;
         let cc_seqno = broadcast.block.cc_seqno as u32;
         let data = broadcast.block.data.0;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "process new shard block: {}", hex::encode(&data)).unwrap();
-		panic!();
         let (master, processed_wc) = self.processed_workchain().await?;
 
         if !master && processed_wc != id.shard().workchain_id() {

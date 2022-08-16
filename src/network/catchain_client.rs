@@ -243,10 +243,6 @@ impl CatchainClient {
         log::trace!(target: Self::TARGET, "result status: {}", &result.is_ok());
         let (data, _) = result?;
         let data = data.ok_or_else(|| error!("asnwer is None!"))?;
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "answer: {}", hex::encode(data)).unwrap();
-		panic!();
         let data = catchain::CatchainFactory::create_block_payload(
             ton_api::ton::bytes(data)
         );
@@ -517,10 +513,6 @@ impl QueriesConsumer for CatchainClientConsumer {
                 fail!(e)
             }
         };
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "query: {}", hex::encode(&data)).unwrap();
-		panic!();
         let (wait, mut queue_reader) = Wait::new();
         self.worker_waiters.insert(id.as_nanos(), wait.clone());
         
