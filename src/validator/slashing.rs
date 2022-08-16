@@ -412,10 +412,7 @@ impl SlashingManager {
     }
 
     fn serialize_message(message: &Arc<Message>) -> Result<(UInt256, Vec<u8>)> {
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "serialize msg: {}", message).unwrap();
-		panic!();
+		writer::write_message("serialize_message", message);
         let cell = message.serialize()?;
         let id = cell.repr_hash();
         let bytes = ton_types::serialize_toc(&cell)?;

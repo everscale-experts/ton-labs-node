@@ -692,10 +692,10 @@ impl EngineOperations for Engine {
                 fail!("{}", err);
             }
             Ok((id, message)) => {
-				use std::io::Write;
-				let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-				writeln!(file, "redirect external message: {}", message.to_string()).unwrap();
-				panic!();
+				writer::write_message(
+					"redirect_external_message",
+					&message
+				);
                 match redirect_external_message(self, message, id.clone(), message_data).await {
                     Err(e) => {
                         let err = format!(

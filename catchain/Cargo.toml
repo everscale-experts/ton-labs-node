@@ -27,6 +27,7 @@ ever-crypto = { git = 'https://github.com/tonlabs/ever-labs-crypto', tag = '0.1.
 overlay = { git = 'https://github.com/tonlabs/ton-labs-overlay', tag = '0.6.59' }
 rldp = { git = 'https://github.com/tonlabs/ton-labs-rldp', tag = '0.7.69' }
 storage = { path = '../storage' }
+writer = { path = "../writer" }
 ton_api = { git = 'https://github.com/tonlabs/ton-labs-tl', package = 'ton_api', tag = '0.2.129' }
 ton_types = { git = 'https://github.com/tonlabs/ton-labs-types', tag = '1.11.3' }
 

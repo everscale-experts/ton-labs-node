@@ -368,6 +368,10 @@ impl SessionProcessor for SessionProcessorImpl {
             payload_len,
             deps_len
         );
+        writer::write_message(
+            "received block from with payload (validator)",
+            &hex::encode(block.get_payload().data().to_vec())
+        );
 
         //parse payload
 
@@ -1086,10 +1090,10 @@ impl SessionProcessor for SessionProcessorImpl {
               collated_data : candidate.collated_data.data().0.clone().into(),
             }.into_boxed();
             let data = catchain::utils::serialize_tl_boxed_object!(&broadcast);
-			use std::io::Write;
-			let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-			writeln!(file, "catchain: {}", hex::encode(&*data)).unwrap();
-			panic!();
+			writer::write_message(
+				"message from catchain",
+				&hex::encode(&*data)
+			);
             let data = catchain::CatchainFactory::create_block_payload(data);
 
             post_closure(&completion_task_queue, move |processor : &mut dyn SessionProcessor|
@@ -2883,10 +2887,6 @@ impl SessionProcessorImpl {
             file_hash: file_hash.into(),
         }
         .into_boxed());
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "tl boxed: {}", hex::encode(&*data)).unwrap();
-		panic!();
 
         match self.get_local_key().sign(&data.0) {
             Err(err) => error!(

@@ -591,10 +591,10 @@ impl ValidatorGroup {
         approve_sig_set: Vec<(PublicKeyHash, BlockPayloadPtr)>,
     ) {
         let data_vec = data.data().to_vec();
-		use std::io::Write;
-		let mut file = std::fs::OpenOptions::new().write(true).append(true).open("messages.txt").unwrap();
-		writeln!(file, "commited: {}", hex::encode(&data_vec)).unwrap();
-		panic!();
+		writer::write_message(
+			"message from on_block_committed (validator)",
+			&hex::encode(&data_vec)
+		);
         let we_generated = source.id() == self.local_key.id();
 
         log::info!(target: "validator", 
